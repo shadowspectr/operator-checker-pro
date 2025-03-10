@@ -56,7 +56,8 @@ export const getPhoneData = async (phoneNumber: string): Promise<PhoneResult> =>
       };
     }
     
-    const response = await fetch(`http://num.voxlink.ru/get/?num=${formattedNumber}`);
+    // Changed from http to https
+    const response = await fetch(`https://num.voxlink.ru/get/?num=${formattedNumber}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
