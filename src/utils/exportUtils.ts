@@ -15,7 +15,7 @@ export const exportToExcel = (data: BatchResults, filename: string = "operator-c
     data.summary.forEach(item => {
       operatorSummaryData.push([
         item.operator, 
-        item.count, 
+        item.count.toString(), // Convert number to string
         `${item.percentage.toFixed(2)}%`
       ]);
     });
@@ -23,7 +23,7 @@ export const exportToExcel = (data: BatchResults, filename: string = "operator-c
     // Add totals row
     operatorSummaryData.push([
       "Итого", 
-      data.successful,
+      data.successful.toString(), // Convert number to string
       "100%"
     ]);
     
