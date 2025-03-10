@@ -1,12 +1,24 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import Header from '@/components/Header';
+import PhoneChecker from '@/components/PhoneChecker';
+import { Toaster } from '@/components/ui/toaster';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col bg-telecom-ultraLight">
+      <Header />
+      <main className="flex-grow">
+        <PhoneChecker />
+      </main>
+      <footer className="bg-telecom-blue text-white py-6">
+        <div className="telecom-container">
+          <div className="text-center">
+            <p className="text-sm opacity-80">© 2023 Сервис Проверки Операторов Мобильной Связи</p>
+          </div>
+        </div>
+      </footer>
+      <Toaster />
     </div>
   );
 };
