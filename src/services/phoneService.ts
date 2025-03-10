@@ -23,20 +23,27 @@ const formatPhoneNumber = (number: string): string => {
   // Remove all non-digit characters
   let cleaned = number.replace(/\D/g, '');
   
-  // Make sure it has the country code
+  // Check for different formats and standardize
   if (cleaned.length === 10) {
+    // For format: 9261234567 (missing country code)
     cleaned = '7' + cleaned;
-  } else if (cleaned.length === 11 && cleaned.startsWith('8')) {
-    cleaned = '7' + cleaned.substring(1);
+  } else if (cleaned.length === 11) {
+    if (cleaned.startsWith('8')) {
+      // For format: 89261234567 (Russian format with 8)
+      cleaned = '7' + cleaned.substring(1);
+    }
+    // For format: 79261234567 (already correct)
   }
   
+  // If not a valid format, return original after cleaning
   return cleaned;
 };
 
 // Check if the phone number is valid
 const isValidPhoneNumber = (number: string): boolean => {
   const cleaned = formatPhoneNumber(number);
-  return cleaned.length === 11 && (cleaned.startsWith('7') || cleaned.startsWith('8'));
+  // Must be 11 digits and start with 7
+  return cleaned.length === 11 && cleaned.startsWith('7');
 };
 
 // Get data for a single phone number

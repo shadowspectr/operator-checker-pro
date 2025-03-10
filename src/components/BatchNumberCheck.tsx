@@ -8,7 +8,7 @@ import { BatchResults } from '../types';
 import { useToast } from '@/components/ui/use-toast';
 import OperatorChart from './OperatorChart';
 import ResultsDisplay from './ResultsDisplay';
-import { Download } from 'lucide-react';
+import { Download, FileText, Loader } from 'lucide-react';
 import { exportToExcel } from '../utils/exportUtils';
 
 const BatchNumberCheck = () => {
@@ -111,42 +111,54 @@ const BatchNumberCheck = () => {
   };
 
   return (
-    <div className="animate-fade-up space-y-6">
+    <div className="space-y-6">
       <div className="space-y-4">
         <Textarea
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           placeholder="Введите номера телефонов, каждый с новой строки или через запятую"
-          className="min-h-[120px]"
+          className="min-h-[120px] border-[#cbd5e0] focus:border-[#3182ce] focus:ring-[#3182ce]"
         />
         
         <div className="flex items-center space-x-2">
-          <div className="flex-1">
+          <div className="flex-1 relative">
+            <label 
+              htmlFor="file-upload" 
+              className="block w-full cursor-pointer bg-white border border-[#cbd5e0] rounded-md px-4 py-2 text-sm text-[#4a5568] hover:bg-[#f7fafc] transition-colors overflow-hidden text-ellipsis"
+            >
+              <FileText className="inline-block mr-2 h-4 w-4" />
+              <span>Выберите файл .txt</span>
+            </label>
             <input
               type="file"
               id="file-upload"
               accept=".txt"
               onChange={handleFileUpload}
-              className="telecom-input-file"
+              className="sr-only"
             />
           </div>
           
           <Button 
             onClick={handleProcess} 
-            className="telecom-button"
+            className="bg-[#3182ce] hover:bg-[#2b6cb0] transition-colors"
             disabled={loading}
           >
-            {loading ? 'Обработка...' : 'Проверить'}
+            {loading ? (
+              <>
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+                Обработка...
+              </>
+            ) : 'Проверить'}
           </Button>
         </div>
       </div>
 
       {results && (
-        <div className="space-y-6">
-          <div className="flex flex-wrap justify-between items-center">
+        <div className="space-y-6 animate-in fade-in-50 duration-300 mt-8">
+          <div className="flex flex-wrap justify-between items-center border-b border-[#e2e8f0] pb-4">
             <div className="mb-4 sm:mb-0">
-              <h3 className="text-xl font-medium">Результаты проверки</h3>
-              <p className="text-telecom-gray">
+              <h3 className="text-xl font-medium text-[#2d3748]">Результаты проверки</h3>
+              <p className="text-[#718096]">
                 Обработано: {results.totalProcessed} | 
                 Успешно: {results.successful} | 
                 С ошибками: {results.failed}
@@ -155,7 +167,7 @@ const BatchNumberCheck = () => {
             
             <Button 
               onClick={handleExport} 
-              className="telecom-button"
+              className="bg-[#38a169] hover:bg-[#2f855a] transition-colors"
               disabled={!results || results.successful === 0}
             >
               <Download className="mr-2 h-4 w-4" />

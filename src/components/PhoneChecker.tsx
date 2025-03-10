@@ -9,13 +9,13 @@ const PhoneChecker = () => {
   const [activeTab, setActiveTab] = useState('single');
 
   return (
-    <div className="telecom-container py-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <Card className="telecom-card">
+        <Card className="shadow-lg border border-[#e2e8f0] overflow-hidden">
           <CardContent className="p-6 md:p-8">
-            <div className="text-center mb-8 animate-fade-in">
-              <h2 className="text-2xl md:text-3xl font-medium text-telecom-blue">Проверка оператора мобильной связи</h2>
-              <p className="text-telecom-gray mt-2">Узнайте оператора и регион по номеру телефона</p>
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-medium text-[#2d3748]">Проверка оператора мобильной связи</h2>
+              <p className="text-[#718096] mt-2">Узнайте оператора и регион по номеру телефона</p>
             </div>
             
             <Tabs 
@@ -24,11 +24,11 @@ const PhoneChecker = () => {
               onValueChange={setActiveTab}
               className="w-full"
             >
-              <TabsList className="grid grid-cols-2 mb-8">
-                <TabsTrigger value="single" className="text-base py-3">
+              <TabsList className="grid grid-cols-2 mb-8 bg-[#edf2f7]">
+                <TabsTrigger value="single" className="text-base py-3 data-[state=active]:bg-white data-[state=active]:text-[#3182ce]">
                   Один номер
                 </TabsTrigger>
-                <TabsTrigger value="batch" className="text-base py-3">
+                <TabsTrigger value="batch" className="text-base py-3 data-[state=active]:bg-white data-[state=active]:text-[#3182ce]">
                   Несколько номеров
                 </TabsTrigger>
               </TabsList>
