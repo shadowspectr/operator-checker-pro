@@ -56,8 +56,10 @@ export const getPhoneData = async (phoneNumber: string): Promise<PhoneResult> =>
       };
     }
     
-    // Changed from http to https
-    const response = await fetch(`https://num.voxlink.ru/get/?num=${formattedNumber}`);
+    // Using a CORS proxy to bypass CORS restrictions
+    const corsProxy = 'https://corsproxy.io/?';
+    const apiUrl = `https://num.voxlink.ru/get/?num=${formattedNumber}`;
+    const response = await fetch(corsProxy + encodeURIComponent(apiUrl));
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
