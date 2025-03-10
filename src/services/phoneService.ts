@@ -26,13 +26,15 @@ const formatPhoneNumber = (number: string): string => {
   // Check for different formats and standardize
   if (cleaned.length === 10) {
     // For format: 9261234567 (missing country code)
-    cleaned = '7' + cleaned;
+    return '7' + cleaned;
   } else if (cleaned.length === 11) {
     if (cleaned.startsWith('8')) {
       // For format: 89261234567 (Russian format with 8)
-      cleaned = '7' + cleaned.substring(1);
+      return '7' + cleaned.substring(1);
+    } else if (cleaned.startsWith('7')) {
+      // For format: 79261234567 (already correct)
+      return cleaned;
     }
-    // For format: 79261234567 (already correct)
   }
   
   // If not a valid format, return original after cleaning
@@ -65,10 +67,14 @@ export const getPhoneData = async (phoneNumber: string): Promise<PhoneResult> =>
     
     // Using a CORS proxy to bypass CORS restrictions
     const corsProxy = 'https://corsproxy.io/?';
+    // Important: We're now making sure the query parameter doesn't end with an equals sign
     const apiUrl = `https://num.voxlink.ru/get/?num=${formattedNumber}`;
     const response = await fetch(corsProxy + encodeURIComponent(apiUrl));
     
     if (!response.ok) {
+      console.error(`HTTP error! Status: ${response.status}, URL: ${apiUrl}`);
+      const responseBody = await response.text();
+      console.error("Response body:", responseBody);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     
